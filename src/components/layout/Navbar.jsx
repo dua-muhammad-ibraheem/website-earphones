@@ -1,49 +1,123 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import {
+  Search,
+  Heart,
+  ShoppingCart,
+  User,
+  Menu,
+} from "lucide-react";
 
 const Navbar = () => {
   return (
-    <nav className="w-full bg-[#111827] text-white shadow-md">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <Link
-          to="/"
-          className="text-2xl font-bold text-[#10B981]"
-        >
-          TechNest
-        </Link>
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
+      <div className="max-w-[1200px] mx-auto px-6">
 
-        <ul className="flex items-center gap-8">
-          <li>
-            <Link to="/" className="hover:text-[#10B981] transition">
-              Home
-            </Link>
-          </li>
+        <div className="h-[84px] flex items-center">
 
-          <li>
-            <Link to="/products" className="hover:text-[#10B981] transition">
-              Products
+          {/* Logo */}
+          <div className="w-[220px] flex-shrink-0">
+            <Link
+              to="/"
+              className="text-[36px] font-extrabold tracking-tight"
+            >
+              <span className="text-[#111827]">AUR</span>
+              <span className="text-[#10B981]">EX</span>
             </Link>
-          </li>
+          </div>
 
-          <li>
-            <Link to="/wishlist" className="hover:text-[#10B981] transition">
-              Wishlist
-            </Link>
-          </li>
+          {/* Navigation */}
+          <nav className="hidden lg:flex flex-1 justify-center">
+            <ul className="flex items-center gap-10 text-[17px] font-medium">
 
-          <li>
-            <Link to="/cart" className="hover:text-[#10B981] transition">
-              Cart
-            </Link>
-          </li>
+              <li>
+                <NavLink
+                  to="/"
+                  className={({ isActive }) =>
+                    `transition duration-300 ${
+                      isActive
+                        ? "text-[#10B981]"
+                        : "text-[#111827] hover:text-[#10B981]"
+                    }`
+                  }
+                >
+                  Home
+                </NavLink>
+              </li>
 
-          <li>
-            <Link to="/login" className="hover:text-[#10B981] transition">
-              Login
-            </Link>
-          </li>
-        </ul>
+              <li>
+                <NavLink
+                  to="/products"
+                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
+                >
+                  Shop
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/categories"
+                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
+                >
+                  Categories
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/deals"
+                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
+                >
+                  Deals
+                </NavLink>
+              </li>
+
+              <li>
+                <NavLink
+                  to="/contact"
+                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
+                >
+                  Contact
+                </NavLink>
+              </li>
+
+            </ul>
+          </nav>
+
+          {/* Icons */}
+          <div className="hidden lg:flex w-[220px] justify-end items-center gap-5">
+
+            <button className="hover:text-[#10B981] transition">
+              <Search size={22} />
+            </button>
+
+            <button className="relative hover:text-[#10B981] transition">
+              <Heart size={22} />
+              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+                0
+              </span>
+            </button>
+
+            <button className="relative hover:text-[#10B981] transition">
+              <ShoppingCart size={22} />
+              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+                0
+              </span>
+            </button>
+
+            <button className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center hover:bg-[#10B981] hover:text-white transition">
+              <User size={20} />
+            </button>
+
+          </div>
+
+          {/* Mobile Menu */}
+          <button className="lg:hidden ml-auto">
+            <Menu size={30} />
+          </button>
+
+        </div>
       </div>
-    </nav>
+    </header>
   );
 };
 

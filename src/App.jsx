@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
+import AnnouncementBar from "./components/layout/AnnouncementBar";
 import Navbar from "./components/layout/Navbar";
 
 import Home from "./pages/Home";
@@ -13,6 +14,7 @@ import Signup from "./pages/Signup";
 function App() {
   return (
     <>
+      <AnnouncementBar />
       <Navbar />
 
       <Routes>
