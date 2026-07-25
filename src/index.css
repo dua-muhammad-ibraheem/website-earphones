@@ -27,27 +27,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-
-
-  @keyframes float {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-14px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-
   @media (max-width: 1024px) {
     font-size: 16px;
   }
@@ -77,11 +56,17 @@ body {
   margin: 0;
 }
 
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+
 #root {
   /* width: 1126px;
   max-width: 100%; */
   /* margin: 0 auto; */
-  text-align: center;
+  /* text-align: center; */
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -133,3 +118,16 @@ code {
   background: var(--code-bg);
 }
 
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-14px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
