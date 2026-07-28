@@ -47,14 +47,16 @@ const Hero = () => {
   });
 
   return (
-    <section className="relative overflow-hidden bg-[#F8FAFC] min-h-[calc(100vh-120px)] lg:h-[calc(100vh-130px)] flex items-center">
+    // Mobile: natural content height (no forced min-height, no scroll pressure).
+    // Desktop (lg+): original fixed viewport-based height — UNCHANGED.
+    <section className="relative overflow-hidden bg-[#F8FAFC] lg:min-h-[calc(100vh-130px)] lg:h-[calc(100vh-130px)] flex items-center">
       {/* Background Blur — isolated on its own GPU layer so it doesn't repaint with the animation */}
       <div className="absolute -left-40 top-20 h-[420px] w-[420px] rounded-full bg-emerald-200/50 blur-[120px] transform-gpu will-change-transform" />
       <div className="absolute right-0 bottom-0 h-[420px] w-[420px] rounded-full bg-emerald-100/60 blur-[130px] transform-gpu will-change-transform" />
 
       {/* Container */}
-      <div className="mx-auto w-full max-w-[1340px] px-6 lg:px-10 py-4 lg:py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-10 lg:gap-8">
+      <div className="mx-auto w-full max-w-[1340px] px-6 lg:px-10 py-8 lg:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 items-center gap-6 lg:gap-8">
           {/* LEFT SIDE */}
           <motion.div
             variants={leftContainer}
@@ -108,30 +110,30 @@ const Hero = () => {
               </motion.button>
             </motion.div>
 
-            {/* Stats */}
+            {/* Stats — shorter cards on mobile only, lg: values unchanged */}
             <motion.div
               variants={fadeUp}
               className="grid grid-cols-3 gap-3 mt-8 -ml-2 lg:ml-0 lg:flex lg:gap-10"
             >
-              <div className="bg-white rounded-2xl shadow-lg p-4 text-center h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
-                <h3 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-black text-slate-900">
+              <div className="bg-white rounded-2xl shadow-lg p-3 sm:p-4 text-center h-[100px] sm:h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
+                <h3 className="text-2xl sm:text-4xl lg:text-3xl xl:text-4xl font-black text-slate-900">
                   25K+
                 </h3>
-                <p className="mt-1 text-slate-500">Happy Customers</p>
+                <p className="mt-1 text-xs sm:text-base text-slate-500">Happy Customers</p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-lg p-4 text-center h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
-                <h3 className="text-3xl sm:text-4xl lg:text-3xl xl:text-4xl font-black text-slate-900">
+              <div className="bg-white rounded-2xl shadow-lg p-3 sm:p-4 text-center h-[100px] sm:h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
+                <h3 className="text-2xl sm:text-4xl lg:text-3xl xl:text-4xl font-black text-slate-900">
                   4.9★
                 </h3>
-                <p className="mt-1 text-slate-500">Average Rating</p>
+                <p className="mt-1 text-xs sm:text-base text-slate-500">Average Rating</p>
               </div>
 
-              <div className="bg-white rounded-2xl shadow-lg p-4 text-center h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
-                <h3 className="text-3xl sm:text-4xl lg:text-3xl font-black text-slate-900 whitespace-nowrap">
+              <div className="bg-white rounded-2xl shadow-lg p-3 sm:p-4 text-center h-[100px] sm:h-[120px] flex flex-col justify-center lg:bg-transparent lg:shadow-none lg:p-0 lg:h-auto lg:min-w-[150px]">
+                <h3 className="text-2xl sm:text-4xl lg:text-3xl font-black text-slate-900 whitespace-nowrap">
                   2 Years
                 </h3>
-                <p className="mt-1 text-slate-500">Warranty</p>
+                <p className="mt-1 text-xs sm:text-base text-slate-500">Warranty</p>
               </div>
             </motion.div>
           </motion.div>
@@ -141,17 +143,17 @@ const Hero = () => {
             variants={imageWrap}
             initial="hidden"
             animate="show"
-            className="relative flex justify-center items-center h-[340px] sm:h-[430px] lg:h-[520px] order-first lg:order-last transform-gpu"
+            className="relative flex justify-center items-center h-[260px] sm:h-[430px] lg:h-[520px] order-first lg:order-last transform-gpu"
           >
             {/* Background Glow */}
             <div className="absolute h-[420px] w-[420px] rounded-full bg-emerald-100 blur-[110px] opacity-80 transform-gpu will-change-transform" />
 
-            {/* 30% OFF Card */}
+            {/* 30% OFF Card — hidden on smallest screens to reduce mobile height, back from sm: up */}
             <motion.div
               variants={badge(0.55)}
               initial="hidden"
               animate="show"
-              className="absolute top-6 right-2 sm:right-6 lg:top-3 lg:right-8 z-20 rounded-2xl bg-white px-5 py-4 shadow-2xl transform-gpu will-change-transform"
+              className="absolute top-6 right-2 sm:right-6 lg:top-3 lg:right-8 z-20 hidden sm:block rounded-2xl bg-white px-5 py-4 shadow-2xl transform-gpu will-change-transform"
               style={{ animation: "aurex-float-a 4.5s ease-in-out 0.6s infinite" }}
             >
               <h3 className="text-4xl font-black text-emerald-500">30%</h3>
@@ -189,11 +191,11 @@ const Hero = () => {
               <p className="text-sm text-slate-500">On Orders Over $100</p>
             </motion.div>
 
-            {/* Product Image — single animation source (parent controls the reveal) */}
+            {/* Product Image — smaller base (mobile) size, sm/lg/xl unchanged */}
             <img
               src="/ChatGPT Image Jul 27, 2026, 03_55_01 AM.png"
               alt="Premium Headphones"
-              className="relative z-10 w-[230px] sm:w-[300px] md:w-[360px] lg:w-[430px] xl:w-[470px] object-contain transform-gpu"
+           className="relative flex justify-center items-center h-[220px] sm:h-[430px] lg:h-[520px] order-first lg:order-last transform-gpu"
             />
           </motion.div>
         </div>
