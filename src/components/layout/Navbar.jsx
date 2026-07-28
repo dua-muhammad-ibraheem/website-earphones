@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Search,
-  Heart,
-  ShoppingCart,
-  User,
-  Menu,
-  X,
-} from "lucide-react";
+import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/products", label: "Shop" },
-  { to: "/categories", label: "Categories" },
-  { to: "/deals", label: "Deals" },
+  { to: "/about", label: "About" },
+  { to: "/support", label: "Support" },
   { to: "/contact", label: "Contact" },
 ];
-
 const EASE = [0.16, 1, 0.3, 1];
 
 const Navbar = () => {
@@ -80,19 +72,18 @@ const Navbar = () => {
 
               <li>
                 <NavLink
-                  to="/categories"
+                  to="/about"
                   className="text-[#111827] hover:text-[#10B981] transition duration-300"
                 >
-                  Categories
+                  About
                 </NavLink>
               </li>
-
               <li>
                 <NavLink
-                  to="/deals"
+                  to="/support"
                   className="text-[#111827] hover:text-[#10B981] transition duration-300"
                 >
-                  Deals
+                  Support
                 </NavLink>
               </li>
 
