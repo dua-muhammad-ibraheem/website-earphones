@@ -1,8 +1,12 @@
 import { useParams } from "react-router-dom";
 import dummyProducts from "../data/products";
 import { useState } from "react";
+import { useContext } from "react";
+import CartContext from "../context/CartContext";
+
 const ProductDetails = () => {
   const { id } = useParams();
+  const { cartItems, setCartItems } = useContext(CartContext);
 const [quantity, setQuantity] = useState(1);
 const features = [
   "Active Noise Cancellation",
@@ -12,7 +16,31 @@ const features = [
   "1 Year Warranty",
 ];
   const product = dummyProducts.find((item) => item.id === Number(id));
+const handleAddToCart = () => {
+    console.log("clicked", cartItems);
+  const existingItem = cartItems.find(
+    (item) => item.id === product.id
+  );
+alert("Product added to cart!");
+  if (existingItem) {
+    const updatedCart = cartItems.map((item) =>
+      item.id === product.id
+        ? { ...item, quantity: item.quantity + quantity }
+        : item
+    );
 
+    setCartItems(updatedCart);
+  } else {
+    setCartItems([
+      ...cartItems,
+      {
+        ...product,
+        quantity,
+      },
+      
+    ]);
+  }
+};
   if (!product) {
     return <div className="py-20 text-center">Product not found.</div>;
   }
@@ -87,9 +115,12 @@ const features = [
   </div>
 </div>
           <div className="mt-10 flex gap-4">
-            <button className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white hover:bg-emerald-600">
-              Add to Cart
-            </button>
+           <button
+  onClick={handleAddToCart}
+  className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white hover:bg-emerald-600"
+>
+  Add to Cart
+</button>
 
             <button className="rounded-xl border border-slate-300 px-8 py-3 font-semibold hover:bg-slate-100">
               Buy Now

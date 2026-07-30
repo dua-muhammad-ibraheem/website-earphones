@@ -111,12 +111,15 @@ const Navbar = () => {
               </span>
             </button>
 
-            <button className="relative hover:text-[#10B981] transition text-[#111827]">
-              <ShoppingCart size={22} />
-              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
-                0
-              </span>
-            </button>
+            <Link
+  to="/cart"
+  className="relative hover:text-[#10B981] transition text-[#111827]"
+>
+  <ShoppingCart size={22} />
+  <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+    0
+  </span>
+</Link>
 
             <button className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center text-[#111827] hover:bg-[#10B981] hover:text-white transition">
               <User size={20} />
