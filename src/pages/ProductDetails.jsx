@@ -4,6 +4,13 @@ import { useState } from "react";
 const ProductDetails = () => {
   const { id } = useParams();
 const [quantity, setQuantity] = useState(1);
+const features = [
+  "Active Noise Cancellation",
+  "Bluetooth 5.3",
+  "30 Hours Battery Life",
+  "Fast USB-C Charging",
+  "1 Year Warranty",
+];
   const product = dummyProducts.find((item) => item.id === Number(id));
 
   if (!product) {
@@ -87,7 +94,26 @@ const [quantity, setQuantity] = useState(1);
             <button className="rounded-xl border border-slate-300 px-8 py-3 font-semibold hover:bg-slate-100">
               Buy Now
             </button>
+
+            
           </div>
+<div className="mt-12">
+  <h3 className="mb-4 text-xl font-bold text-slate-900">
+    Features
+  </h3>
+
+  <ul className="space-y-3">
+    {features.map((feature, index) => (
+      <li
+        key={index}
+        className="flex items-center gap-3 text-slate-700"
+      >
+        <span className="text-emerald-500">✔</span>
+        {feature}
+      </li>
+    ))}
+  </ul>
+</div>
         </div>
       </div>
     </section>
