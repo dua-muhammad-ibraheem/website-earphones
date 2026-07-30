@@ -3,6 +3,7 @@ import { Heart, ShoppingCart, Star, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+
 const EASE = [0.16, 1, 0.3, 1];
 
 const ProductCard = ({ product }) => {
