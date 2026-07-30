@@ -34,12 +34,13 @@ const Categories = () => {
             Categories
           </span>
 
-          <h2 className="mt-4 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-slate-900">
+          {/* Badge aur heading ke beech breathing room diya (mt-4 -> mt-6) */}
+          <h2 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-slate-900">
             Shop by <span className="text-emerald-500">Category</span>
           </h2>
 
-          {/* Small accent divider — grounds the heading instead of leaving it floating in white space */}
-          <div className="mt-5 h-1 w-16 rounded-full bg-emerald-500" />
+          {/* Divider ab heading ke zyada qareeb hai (mt-5 -> mt-3) */}
+          <div className="mt-3 h-1 w-16 rounded-full bg-emerald-500" />
 
           <p className="mt-5 max-w-xl text-base sm:text-lg leading-7 sm:leading-8 text-slate-500">
             Find the perfect audio products for every lifestyle, whether
