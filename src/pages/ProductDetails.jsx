@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
 import dummyProducts from "../data/products";
-
+import { useState } from "react";
 const ProductDetails = () => {
   const { id } = useParams();
-
+const [quantity, setQuantity] = useState(1);
   const product = dummyProducts.find((item) => item.id === Number(id));
 
   if (!product) {
@@ -49,6 +49,36 @@ const ProductDetails = () => {
             and travel.
           </p>
 
+
+<div className="mt-10">
+  <h3 className="mb-3 text-lg font-semibold text-slate-900">
+    Quantity
+  </h3>
+
+  <div className="flex w-fit items-center overflow-hidden rounded-xl border border-slate-300">
+
+    <button
+      onClick={() =>
+        setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
+      }
+      className="px-5 py-3 text-xl font-bold hover:bg-slate-100"
+    >
+      -
+    </button>
+
+    <span className="border-x border-slate-300 px-6 py-3 font-semibold">
+      {quantity}
+    </span>
+
+    <button
+      onClick={() => setQuantity((prev) => prev + 1)}
+      className="px-5 py-3 text-xl font-bold hover:bg-slate-100"
+    >
+      +
+    </button>
+
+  </div>
+</div>
           <div className="mt-10 flex gap-4">
             <button className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white hover:bg-emerald-600">
               Add to Cart
