@@ -10,6 +10,7 @@ const NAV_LINKS = [
   { to: "/support", label: "Support" },
   { to: "/contact", label: "Contact" },
 ];
+
 const EASE = [0.16, 1, 0.3, 1];
 
 const Navbar = () => {
@@ -17,7 +18,6 @@ const Navbar = () => {
 
   const closeMenu = () => setIsOpen(false);
 
-  // Jab menu khula ho, background scroll lock kar do (mobile full-screen menu ke liye zaroori)
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -26,112 +26,79 @@ const Navbar = () => {
   }, [isOpen]);
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      {/* Container ki max-width ko responsive aur properly space out rakha hai */}
-      <div className="max-w-300 mx-auto px-6">
-        {/* FIX: Yahan 'justify-between' add kiya hai taake teeno sections barabar space lein */}
-        <div className="h-21 flex items-center justify-between gap-4">
-          {/* Logo — thora chota kiya, mobile aur desktop dono pe */}
-          <div className="flex-1 flex justify-start">
+    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+      <div className="mx-auto max-w-[1400px] px-6">
+        <div className="flex h-20 items-center justify-between gap-4">
+                    {/* Logo */}
+          <div className="flex flex-1 justify-start">
             <Link
               to="/"
               onClick={closeMenu}
-              className="text-[26px] sm:text-[28px] lg:text-[30px] font-extrabold tracking-tight flex items-center"
+              className="flex items-center text-[26px] font-extrabold tracking-tight sm:text-[28px] lg:text-[30px]"
             >
               <span className="text-[#111827]">AUR</span>
               <span className="text-[#10B981]">EX</span>
             </Link>
           </div>
 
-          {/* Navigation (Bilkul center mein rahega) */}
-          <nav className="hidden lg:flex justify-center items-center">
+          {/* Desktop Navigation */}
+          <nav className="hidden items-center justify-center lg:flex">
             <ul className="flex items-center gap-10 text-[17px] font-medium">
-              <li>
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    `transition duration-300 ${
-                      isActive
-                        ? "text-[#10B981]"
-                        : "text-[#111827] hover:text-[#10B981]"
-                    }`
-                  }
-                >
-                  Home
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/products"
-                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
-                >
-                  Shop
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/about"
-                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
-                >
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/support"
-                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
-                >
-                  Support
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/contact"
-                  className="text-[#111827] hover:text-[#10B981] transition duration-300"
-                >
-                  Contact
-                </NavLink>
-              </li>
+              {NAV_LINKS.map((link) => (
+                <li key={link.to}>
+                  <NavLink
+                    to={link.to}
+                    className={({ isActive }) =>
+                      `transition duration-300 ${
+                        isActive
+                          ? "text-[#10B981]"
+                          : "text-[#111827] hover:text-[#10B981]"
+                      }`
+                    }
+                  >
+                    {link.label}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </nav>
 
-          {/* Icons (FIX: w-[220px] hata kar right-align kiya hai) */}
-          <div className="hidden lg:flex flex-1 justify-end items-center gap-5">
-            <button className="hover:text-[#10B981] transition text-[#111827]">
+          {/* Desktop Icons */}
+          <div className="hidden flex-1 items-center justify-end gap-5 lg:flex">
+            <button className="text-[#111827] transition hover:text-[#10B981]">
               <Search size={22} />
             </button>
 
-            <button className="relative hover:text-[#10B981] transition text-[#111827]">
+            <Link
+              to="/wishlist"
+              className="relative text-[#111827] transition hover:text-[#10B981]"
+            >
               <Heart size={22} />
-              <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
                 0
               </span>
-            </button>
+            </Link>
 
             <Link
-  to="/cart"
-  className="relative hover:text-[#10B981] transition text-[#111827]"
->
-  <ShoppingCart size={22} />
-  <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
-    0
-  </span>
-</Link>
+              to="/cart"
+              className="relative text-[#111827] transition hover:text-[#10B981]"
+            >
+              <ShoppingCart size={22} />
+              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
+                0
+              </span>
+            </Link>
 
-            <button className="w-11 h-11 rounded-full border border-gray-300 flex items-center justify-center text-[#111827] hover:bg-[#10B981] hover:text-white transition">
+            <button className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white">
               <User size={20} />
             </button>
           </div>
 
-          {/* Mobile Menu Icon — click se toggle hota hai, X mein badalta hai */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
-            aria-expanded={isOpen}
-            className="lg:hidden ml-auto text-[#111827] relative w-8 h-8 flex items-center justify-center z-[60]"
+            className="relative z-[60] ml-auto flex h-8 w-8 items-center justify-center text-[#111827] lg:hidden"
           >
             <AnimatePresence mode="wait" initial={false}>
               {isOpen ? (
@@ -161,39 +128,49 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Full-Screen Menu — poori screen cover karta hai, koi backdrop-alignment issue nahi */}
-      <AnimatePresence>
+            <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: EASE }}
-            className="lg:hidden fixed inset-0 z-50 bg-white flex flex-col overflow-y-auto"
+            className="fixed inset-0 z-50 flex flex-col overflow-y-auto bg-white lg:hidden"
           >
-            {/* Apni hi top bar — logo repeat, taake user disoriented na ho */}
-            <div className="h-21 flex items-center justify-between px-6 border-b border-gray-200 shrink-0">
+            {/* Mobile Header */}
+            <div className="flex h-20 items-center justify-between border-b border-gray-200 px-6">
               <span className="text-[26px] font-extrabold tracking-tight">
                 <span className="text-[#111827]">AUR</span>
                 <span className="text-[#10B981]">EX</span>
               </span>
+
+              <button
+                onClick={closeMenu}
+                className="text-[#111827]"
+              >
+                <X size={26} />
+              </button>
             </div>
 
+            {/* Mobile Navigation */}
             <ul className="flex flex-col px-6 py-4">
-              {NAV_LINKS.map((link, i) => (
+              {NAV_LINKS.map((link, index) => (
                 <motion.li
                   key={link.to}
-                  initial={{ opacity: 0, x: -16 }}
+                  initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, ease: EASE, delay: 0.05 * i }}
-                  className="border-b border-gray-100 last:border-b-0"
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.05,
+                    ease: EASE,
+                  }}
+                  className="border-b border-gray-100 last:border-none"
                 >
                   <NavLink
                     to={link.to}
                     onClick={closeMenu}
                     className={({ isActive }) =>
-                      `block py-4 text-[19px] font-medium transition duration-300 ${
+                      `block py-4 text-[19px] font-medium transition ${
                         isActive
                           ? "text-[#10B981]"
                           : "text-[#111827] hover:text-[#10B981]"
@@ -206,30 +183,40 @@ const Navbar = () => {
               ))}
             </ul>
 
-            {/* Icons row — hamesha panel ke neeche pinned rehta hai, gray backdrop wala issue nahi ab */}
-            <div className="mt-auto flex items-center justify-around border-t border-gray-100 px-6 py-5">
-              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981] transition">
+            {/* Mobile Bottom Icons */}
+            <div className="mt-auto flex items-center justify-around border-t border-gray-200 px-6 py-5">
+              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
                 <Search size={20} />
                 <span className="text-xs">Search</span>
               </button>
 
-              <button className="relative flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981] transition">
+              <Link
+                to="/wishlist"
+                onClick={closeMenu}
+                className="relative flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
+              >
                 <Heart size={20} />
                 <span className="text-xs">Wishlist</span>
-                <span className="absolute -top-1 right-3 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+
+                <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
                   0
                 </span>
-              </button>
+              </Link>
 
-              <button className="relative flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981] transition">
+              <Link
+                to="/cart"
+                onClick={closeMenu}
+                className="relative flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
+              >
                 <ShoppingCart size={20} />
                 <span className="text-xs">Cart</span>
-                <span className="absolute -top-1 right-3 w-4 h-4 rounded-full bg-[#10B981] text-white text-[10px] flex items-center justify-center">
+
+                <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
                   0
                 </span>
-              </button>
+              </Link>
 
-              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981] transition">
+              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
                 <User size={20} />
                 <span className="text-xs">Account</span>
               </button>
