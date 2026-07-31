@@ -1,8 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { Search, Heart, ShoppingCart, User, Menu, X } from "lucide-react";
+import {
+  Search,
+  Heart,
+  ShoppingCart,
+  User,
+  Menu,
+  X,
+} from "lucide-react";
 
+// Contexts
+import WishlistContext from "../../context/WishlistContext";
+import CartContext from "../../context/CartContext";
+
+// Navbar Links
 const NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/products", label: "Shop" },
@@ -11,15 +23,26 @@ const NAV_LINKS = [
   { to: "/contact", label: "Contact" },
 ];
 
+// Animation
 const EASE = [0.16, 1, 0.3, 1];
 
 const Navbar = () => {
+  // Mobile Menu State
   const [isOpen, setIsOpen] = useState(false);
 
+  // Wishlist Context
+  const { wishlistItems } = useContext(WishlistContext);
+
+  // Cart Context
+  const { cartItems } = useContext(CartContext);
+
+  // Close Mobile Menu
   const closeMenu = () => setIsOpen(false);
 
+  // Lock Scroll when menu opens
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
+
     return () => {
       document.body.style.overflow = "";
     };
@@ -27,9 +50,13 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
+
+      {/* Main Container */}
       <div className="mx-auto max-w-[1400px] px-6">
+
         <div className="flex h-20 items-center justify-between gap-4">
-                    {/* Logo */}
+
+          {/* Logo */}
           <div className="flex flex-1 justify-start">
             <Link
               to="/"
@@ -42,7 +69,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden items-center justify-center lg:flex">
+          <nav className="hidden lg:flex items-center justify-center">
             <ul className="flex items-center gap-10 text-[17px] font-medium">
               {NAV_LINKS.map((link) => (
                 <li key={link.to}>
@@ -62,39 +89,46 @@ const Navbar = () => {
               ))}
             </ul>
           </nav>
+                    {/* ================= Desktop Icons ================= */}
+          <div className="hidden lg:flex flex-1 items-center justify-end gap-5">
 
-          {/* Desktop Icons */}
-          <div className="hidden flex-1 items-center justify-end gap-5 lg:flex">
+            {/* Search */}
             <button className="text-[#111827] transition hover:text-[#10B981]">
               <Search size={22} />
             </button>
 
+            {/* Wishlist */}
             <Link
               to="/wishlist"
               className="relative text-[#111827] transition hover:text-[#10B981]"
             >
               <Heart size={22} />
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                0
+
+              <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
+                {wishlistItems.length}
               </span>
             </Link>
 
+            {/* Cart */}
             <Link
               to="/cart"
               className="relative text-[#111827] transition hover:text-[#10B981]"
             >
               <ShoppingCart size={22} />
-              <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                0
+
+              <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
+                {cartItems.length}
               </span>
             </Link>
 
+            {/* User */}
             <button className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white">
               <User size={20} />
             </button>
+
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* ================= Mobile Menu Button ================= */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -126,9 +160,11 @@ const Navbar = () => {
               )}
             </AnimatePresence>
           </button>
+
         </div>
       </div>
-            <AnimatePresence>
+            {/* ================= Mobile Menu ================= */}
+      <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -144,10 +180,7 @@ const Navbar = () => {
                 <span className="text-[#10B981]">EX</span>
               </span>
 
-              <button
-                onClick={closeMenu}
-                className="text-[#111827]"
-              >
+              <button onClick={closeMenu}>
                 <X size={26} />
               </button>
             </div>
@@ -182,14 +215,16 @@ const Navbar = () => {
                 </motion.li>
               ))}
             </ul>
-
-            {/* Mobile Bottom Icons */}
+                        {/* ================= Mobile Bottom Icons ================= */}
             <div className="mt-auto flex items-center justify-around border-t border-gray-200 px-6 py-5">
+
+              {/* Search */}
               <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
                 <Search size={20} />
                 <span className="text-xs">Search</span>
               </button>
 
+              {/* Wishlist */}
               <Link
                 to="/wishlist"
                 onClick={closeMenu}
@@ -199,10 +234,11 @@ const Navbar = () => {
                 <span className="text-xs">Wishlist</span>
 
                 <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                  0
+                  {wishlistItems.length}
                 </span>
               </Link>
 
+              {/* Cart */}
               <Link
                 to="/cart"
                 onClick={closeMenu}
@@ -212,18 +248,22 @@ const Navbar = () => {
                 <span className="text-xs">Cart</span>
 
                 <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                  0
+                  {cartItems.length}
                 </span>
               </Link>
 
+              {/* Account */}
               <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
                 <User size={20} />
                 <span className="text-xs">Account</span>
               </button>
+
             </div>
+
           </motion.div>
         )}
       </AnimatePresence>
+
     </header>
   );
 };
