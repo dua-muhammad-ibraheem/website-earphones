@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import CartContext from "../context/CartContext";
-
+import { Link } from "react-router-dom";
 const Cart = () => {
   const { cartItems, setCartItems } = useContext(CartContext);
 
@@ -138,9 +138,12 @@ const Cart = () => {
                 </div>
               </div>
 
-              <button className="mt-8 w-full rounded-xl bg-emerald-500 py-3 font-semibold text-white transition hover:bg-emerald-600">
-                Proceed to Checkout
-              </button>
+          <Link
+  to="/checkout"
+  className="mt-8 block w-full rounded-xl bg-emerald-500 py-3 text-center font-semibold text-white transition hover:bg-emerald-600"
+>
+  Proceed to Checkout
+</Link>
             </aside>
 
           </div>

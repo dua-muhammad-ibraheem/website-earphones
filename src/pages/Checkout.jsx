@@ -19,11 +19,10 @@ const Checkout = () => {
 
   return (
     <section className="min-h-screen bg-slate-50 py-16">
-
       {/* Main Container */}
       <div className="mx-auto grid max-w-[1340px] gap-10 px-6 lg:grid-cols-[2fr_1fr] lg:px-10">
 
-                {/* ================= Shipping Information ================= */}
+        {/* ================= Shipping Information ================= */}
         <div className="rounded-2xl bg-white p-8 shadow-sm">
 
           <h2 className="mb-8 text-3xl font-bold text-slate-900">
@@ -88,7 +87,6 @@ const Checkout = () => {
 
           {/* Address */}
           <div className="mt-6">
-
             <label className="mb-2 block font-medium text-slate-700">
               Address
             </label>
@@ -98,8 +96,10 @@ const Checkout = () => {
               placeholder="Enter your complete address"
               className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-emerald-500"
             ></textarea>
-
           </div>
+
+        </div>
+
         {/* ================= Order Summary ================= */}
         <div className="rounded-2xl bg-white p-8 shadow-sm h-fit">
 
@@ -170,12 +170,9 @@ const Checkout = () => {
             Place Order
           </button>
 
+        </div>
 
-        </div>
-        </div>
-        
       </div>
-            </div>
     </section>
   );
 };

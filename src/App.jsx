@@ -12,6 +12,7 @@ import Support from "./pages/Support";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 // import Wishlist from "./pages/Wishlist";
+import Checkout from "./pages/Checkout";
 function App() {
   return (
     <>
@@ -29,6 +30,7 @@ function App() {
         <Route path="/about" element={<About />} />
 <Route path="/support" element={<Support />} />
 <Route path="/contact" element={<Contact />} />
+<Route path="/checkout" element={<Checkout />} />
 {/* <Route path="/wishlist" element={<Wishlist />} /> */}
       </Routes>
     </>
