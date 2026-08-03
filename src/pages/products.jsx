@@ -1,8 +1,11 @@
+import { useState } from "react";
 import ProductFilters from "../components/products/ProductFilters";
 import SearchBar from "../components/products/SearchBar";
 import ProductGrid from "../components/products/ProductGrid";
 
 const Products = () => {
+  // Search State
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <section className="relative overflow-hidden min-h-screen bg-slate-50 py-16 sm:py-20 lg:py-24">
       {/* Decorative background accent — matches Hero & Categories for a consistent brand feel */}
@@ -29,16 +32,17 @@ const Products = () => {
           </p>
         </div>
 
-        {/* Search */}
-        <SearchBar />
+      <SearchBar
+  searchTerm={searchTerm}
+  setSearchTerm={setSearchTerm}
+/>
 
         {/* Products Layout */}
         <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr] mt-8">
           {/* Sidebar */}
           <ProductFilters />
 
-          {/* Product Grid */}
-          <ProductGrid />
+          <ProductGrid searchTerm={searchTerm} />
         </div>
       </div>
     </section>

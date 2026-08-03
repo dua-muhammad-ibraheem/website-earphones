@@ -1,6 +1,8 @@
 import { Search } from "lucide-react";
 
-const SearchBar = () => {
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
+  console.log(searchTerm);
+console.log(setSearchTerm);
   return (
     <div className="mb-8 flex flex-col gap-4 rounded-3xl border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between">
 
@@ -13,11 +15,16 @@ const SearchBar = () => {
           className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
         />
 
-        <input
-          type="text"
-          placeholder="Search products..."
-          className="w-full rounded-xl border border-slate-300 py-3 pl-12 pr-4 outline-none transition focus:border-emerald-500"
-        />
+    <input
+  type="text"
+  value={searchTerm}
+  onChange={(e) => {
+    console.log(e.target.value);
+    setSearchTerm(e.target.value);
+  }}
+  placeholder="Search products..."
+  className="w-full rounded-xl border border-slate-300 py-3 pl-12 pr-4 outline-none transition focus:border-emerald-500"
+/>
 
       </div>
 
