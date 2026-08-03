@@ -1,15 +1,21 @@
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import CartContext from "../context/CartContext";
 
 const Checkout = () => {
   // Cart Data
   const { cartItems } = useContext(CartContext);
-
+const navigate = useNavigate();
   // Calculate Subtotal
   const subtotal = cartItems.reduce(
+        
     (total, item) => total + item.price * item.quantity,
     0
   );
+  // Place Order
+const handlePlaceOrder = () => {
+  navigate("/order-success");
+};
 
   // Fixed Shipping Charges
   const shipping = cartItems.length > 0 ? 20 : 0;
@@ -166,9 +172,12 @@ const Checkout = () => {
           </div>
 
           {/* Place Order Button */}
-          <button className="mt-8 w-full rounded-xl bg-emerald-500 py-4 font-semibold text-white transition hover:bg-emerald-600">
-            Place Order
-          </button>
+        <button
+  onClick={handlePlaceOrder}
+  className="mt-8 w-full rounded-xl bg-emerald-500 py-4 font-semibold text-white transition hover:bg-emerald-600"
+>
+  Place Order
+</button>
 
         </div>
 
