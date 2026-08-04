@@ -2,16 +2,35 @@ import ProductCard from "./ProductCard";
 
 import dummyProducts from "../../data/products";
 
-const ProductGrid = ({ searchTerm = "" }) => {
+const ProductGrid = ({
+  searchTerm = "",
+  sortOption,
+}) => {
   // Filter Products
 const filteredProducts = dummyProducts.filter((product) =>
   product.name
     .toLowerCase()
     .includes((searchTerm || "").toLowerCase())
 );
+
+// Copy Array for Sorting
+const sortedProducts = [...filteredProducts];
+
+// Sorting Logic
+if (sortOption === "Price: Low to High") {
+  sortedProducts.sort((a, b) => a.price - b.price);
+}
+
+if (sortOption === "Price: High to Low") {
+  sortedProducts.sort((a, b) => b.price - a.price);
+}
+
+if (sortOption === "Top Rated") {
+  sortedProducts.sort((a, b) => b.rating - a.rating);
+}
   return (
 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-      {filteredProducts.map((product) => (
+   {sortedProducts.map((product) => (
         <ProductCard
           key={product.id}
           product={product}

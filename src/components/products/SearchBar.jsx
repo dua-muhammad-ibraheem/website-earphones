@@ -1,6 +1,11 @@
 import { Search } from "lucide-react";
 
-const SearchBar = ({ searchTerm, setSearchTerm }) => {
+const SearchBar = ({
+  searchTerm,
+  setSearchTerm,
+  sortOption,
+  setSortOption,
+}) => {
   console.log(searchTerm);
 console.log(setSearchTerm);
   return (
@@ -28,17 +33,24 @@ console.log(setSearchTerm);
 
       </div>
 
-      {/* Sort */}
+      {/* Sort */}<select
+  value={sortOption}
+  onChange={(e) => setSortOption(e.target.value)}
+  className="rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+>
+<option value="Newest">Newest</option>
 
-      <select className="rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500">
+<option value="Price: Low to High">
+  Price: Low to High
+</option>
 
-        <option>Newest</option>
+<option value="Price: High to Low">
+  Price: High to Low
+</option>
 
-        <option>Price: Low to High</option>
-
-        <option>Price: High to Low</option>
-
-        <option>Top Rated</option>
+<option value="Top Rated">
+  Top Rated
+</option>
 
       </select>
 

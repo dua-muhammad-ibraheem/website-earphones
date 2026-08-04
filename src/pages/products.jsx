@@ -3,9 +3,11 @@ import ProductFilters from "../components/products/ProductFilters";
 import SearchBar from "../components/products/SearchBar";
 import ProductGrid from "../components/products/ProductGrid";
 
+
 const Products = () => {
   // Search State
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortOption, setSortOption] = useState("Newest");
   return (
     <section className="relative overflow-hidden min-h-screen bg-slate-50 py-16 sm:py-20 lg:py-24">
       {/* Decorative background accent — matches Hero & Categories for a consistent brand feel */}
@@ -32,9 +34,11 @@ const Products = () => {
           </p>
         </div>
 
-      <SearchBar
+     <SearchBar
   searchTerm={searchTerm}
   setSearchTerm={setSearchTerm}
+  sortOption={sortOption}
+  setSortOption={setSortOption}
 />
 
         {/* Products Layout */}
@@ -42,7 +46,10 @@ const Products = () => {
           {/* Sidebar */}
           <ProductFilters />
 
-          <ProductGrid searchTerm={searchTerm} />
+      <ProductGrid
+  searchTerm={searchTerm}
+  sortOption={sortOption}
+/>
         </div>
       </div>
     </section>
