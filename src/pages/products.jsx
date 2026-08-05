@@ -3,7 +3,8 @@ import ProductFilters from "../components/products/ProductFilters";
 import SearchBar from "../components/products/SearchBar";
 import ProductGrid from "../components/products/ProductGrid";
 
-
+const [searchTerm, setSearchTerm] = useState("");
+const [maxPrice, setMaxPrice] = useState(500);
 const Products = () => {
   // Search State
   const [searchTerm, setSearchTerm] = useState("");
@@ -44,11 +45,13 @@ const Products = () => {
         {/* Products Layout */}
         <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr] mt-8">
           {/* Sidebar */}
-          <ProductFilters />
-
-      <ProductGrid
+        <ProductFilters
+  maxPrice={maxPrice}
+  setMaxPrice={setMaxPrice}
+/>
+   <ProductGrid
   searchTerm={searchTerm}
-  sortOption={sortOption}
+  maxPrice={maxPrice}
 />
         </div>
       </div>
