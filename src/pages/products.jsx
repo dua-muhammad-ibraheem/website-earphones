@@ -3,11 +3,11 @@ import ProductFilters from "../components/products/ProductFilters";
 import SearchBar from "../components/products/SearchBar";
 import ProductGrid from "../components/products/ProductGrid";
 
-const [searchTerm, setSearchTerm] = useState("");
-const [maxPrice, setMaxPrice] = useState(500);
+
 const Products = () => {
   // Search State
   const [searchTerm, setSearchTerm] = useState("");
+const [maxPrice, setMaxPrice] = useState(500);
   const [sortOption, setSortOption] = useState("Newest");
   return (
     <section className="relative overflow-hidden min-h-screen bg-slate-50 py-16 sm:py-20 lg:py-24">

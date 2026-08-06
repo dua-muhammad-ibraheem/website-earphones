@@ -1,6 +1,6 @@
 import { SlidersHorizontal } from "lucide-react";
 
-const ProductFilters = () => {
+const ProductFilters = ({ maxPrice, setMaxPrice }) => {
   return (
     <aside className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm h-fit sticky top-28">
 
@@ -53,19 +53,18 @@ const ProductFilters = () => {
             Price
           </h4>
 
-          <span className="text-sm text-emerald-500 font-medium">
-            Max $500
-          </span>
+          <span className="text-sm font-medium text-emerald-500">
+  Max ${maxPrice}
+</span>
         </div>
-
-        <input
-          type="range"
-          min="50"
-          max="500"
-          defaultValue="500"
-          className="w-full accent-emerald-500"
-        />
-
+<input
+  type="range"
+  min="50"
+  max="500"
+  value={maxPrice}
+  onChange={(e) => setMaxPrice(Number(e.target.value))}
+  className="w-full accent-emerald-500"
+/>
         <div className="mt-2 flex justify-between text-sm text-slate-500">
           <span>$50</span>
           <span>$500</span>

@@ -5,13 +5,18 @@ import dummyProducts from "../../data/products";
 const ProductGrid = ({
   searchTerm = "",
   sortOption,
+  maxPrice,
 }) => {
   // Filter Products
-const filteredProducts = dummyProducts.filter((product) =>
-  product.name
+const filteredProducts = dummyProducts.filter((product) => {
+  const matchesSearch = product.name
     .toLowerCase()
-    .includes((searchTerm || "").toLowerCase())
-);
+    .includes((searchTerm || "").toLowerCase());
+
+  const matchesPrice = product.price <= maxPrice;
+
+  return matchesSearch && matchesPrice;
+});
 
 // Copy Array for Sorting
 const sortedProducts = [...filteredProducts];
