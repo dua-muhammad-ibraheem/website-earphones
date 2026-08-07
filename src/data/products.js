@@ -6,7 +6,7 @@ const dummyProducts = [
     price: 399,
     oldPrice: 449,
     rating: 4.9,
-   image: "/products/headphone-1.png"
+    image: "/products/headphone-1.png",
   },
   {
     id: 2,
@@ -14,8 +14,8 @@ const dummyProducts = [
     category: "Speaker",
     price: 149,
     oldPrice: 189,
-    rating: 4.8,
-    image: "/products/speaker-1.png"
+    rating: 2.8,
+    image: "/products/speaker-1.png",
   },
   {
     id: 3,
@@ -23,9 +23,8 @@ const dummyProducts = [
     category: "Earbuds",
     price: 249,
     oldPrice: 279,
-    rating: 4.9,
-   image: "/products/earbuds-1.png"
-
+    rating: 3.5,
+    image: "/products/earbuds-1.png",
   },
   {
     id: 4,
@@ -33,9 +32,8 @@ const dummyProducts = [
     category: "Speaker",
     price: 229,
     oldPrice: 259,
-    rating: 4.7,
-image: "/products/speaker-2.png"
-
+    rating: 4.2,
+    image: "/products/speaker-2.png",
   },
   {
     id: 5,
@@ -43,8 +41,8 @@ image: "/products/speaker-2.png"
     category: "Earbuds",
     price: 169,
     oldPrice: 199,
-    rating: 4.8,
-image: "/products/earbuds-2.png"
+    rating: 3.1,
+    image: "/products/earbuds-2.png",
   },
   {
     id: 6,
@@ -52,8 +50,8 @@ image: "/products/earbuds-2.png"
     category: "Headphones",
     price: 349,
     oldPrice: 399,
-    rating: 4.9,
-image: "/products/headphone-2.png"
+    rating: 4.7,
+    image: "/products/headphone-2.png",
   },
 ];
 

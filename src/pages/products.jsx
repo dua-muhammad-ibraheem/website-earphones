@@ -6,9 +6,19 @@ import ProductGrid from "../components/products/ProductGrid";
 
 const Products = () => {
   // Search State
+  const [selectedRating, setSelectedRating] = useState("All Ratings");
   const [searchTerm, setSearchTerm] = useState("");
 const [maxPrice, setMaxPrice] = useState(500);
   const [sortOption, setSortOption] = useState("Newest");
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const handleClearFilters = () => {
+  setSearchTerm("");
+  setSortOption("Newest");
+  setMaxPrice(500);
+  setSelectedCategories([]);
+  setSelectedRating("All Ratings");
+};
   return (
     <section className="relative overflow-hidden min-h-screen bg-slate-50 py-16 sm:py-20 lg:py-24">
       {/* Decorative background accent — matches Hero & Categories for a consistent brand feel */}
@@ -45,13 +55,21 @@ const [maxPrice, setMaxPrice] = useState(500);
         {/* Products Layout */}
         <div className="grid items-start gap-8 lg:grid-cols-[300px_1fr] mt-8">
           {/* Sidebar */}
-        <ProductFilters
+      <ProductFilters
   maxPrice={maxPrice}
   setMaxPrice={setMaxPrice}
+  selectedCategories={selectedCategories}
+  setSelectedCategories={setSelectedCategories}
+  selectedRating={selectedRating}
+  setSelectedRating={setSelectedRating}
+  handleClearFilters={handleClearFilters}
 />
-   <ProductGrid
+<ProductGrid
   searchTerm={searchTerm}
+  sortOption={sortOption}
   maxPrice={maxPrice}
+  selectedCategories={selectedCategories}
+  selectedRating={selectedRating}
 />
         </div>
       </div>
