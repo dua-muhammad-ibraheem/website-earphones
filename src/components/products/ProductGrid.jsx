@@ -54,6 +54,22 @@ if (sortOption === "Price: High to Low") {
 if (sortOption === "Top Rated") {
   sortedProducts.sort((a, b) => b.rating - a.rating);
 }
+
+if (sortedProducts.length === 0) {
+  return (
+    <div className="flex h-80 items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-slate-800">
+          No Products Found
+        </h2>
+
+        <p className="mt-2 text-slate-500">
+          Try changing your search or filters.
+        </p>
+      </div>
+    </div>
+  );
+}
   return (
 <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
    {sortedProducts.map((product) => (

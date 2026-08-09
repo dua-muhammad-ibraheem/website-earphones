@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Heart, ShoppingCart, Star, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
+import CartContext from "../../context/CartContext";
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -10,15 +10,37 @@ const ProductCard = ({ product }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [justAdded, setJustAdded] = useState(false);
 
+  const { cartItems, setCartItems } = useContext(CartContext);
   const discount =
     product.oldPrice && product.oldPrice > product.price
       ? Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)
       : null;
+const handleAddToCart = () => {
+  const existingItem = cartItems.find(
+    (item) => item.id === product.id
+  );
 
-  const handleAddToCart = () => {
-    setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 1500);
-  };
+  if (existingItem) {
+    const updatedCart = cartItems.map((item) =>
+      item.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+
+    setCartItems(updatedCart);
+  } else {
+    setCartItems([
+      ...cartItems,
+      {
+        ...product,
+        quantity: 1,
+      },
+    ]);
+  }
+
+  setJustAdded(true);
+  setTimeout(() => setJustAdded(false), 1500);
+};
 
   return (
     <motion.div

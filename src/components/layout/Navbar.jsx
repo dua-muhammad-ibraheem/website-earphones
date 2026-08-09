@@ -117,7 +117,7 @@ const Navbar = () => {
               <ShoppingCart size={22} />
 
               <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                {cartItems.length}
+              {cartItems.reduce((total, item) => total + item.quantity, 0)}
               </span>
             </Link>
 
@@ -248,7 +248,7 @@ const Navbar = () => {
                 <span className="text-xs">Cart</span>
 
                 <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-                  {cartItems.length}
+{cartItems.reduce((total, item) => total + item.quantity, 0)}
                 </span>
               </Link>
 
