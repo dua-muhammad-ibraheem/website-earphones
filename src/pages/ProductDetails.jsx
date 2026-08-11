@@ -1,50 +1,92 @@
-import { useParams } from "react-router-dom";
-import { useState, useContext } from "react";
-import { Heart } from "lucide-react";
+import { useContext, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Heart, ShoppingCart, Star, ArrowLeft, Check } from "lucide-react";
+import { motion } from "framer-motion";
 
 import dummyProducts from "../data/products";
 import CartContext from "../context/CartContext";
 import WishlistContext from "../context/WishlistContext";
 
+const EASE = [0.16, 1, 0.3, 1];
+
 const ProductDetails = () => {
   const { id } = useParams();
+
+  const product = dummyProducts.find(
+    (item) => item.id === Number(id)
+  );
 
   const { cartItems, setCartItems } = useContext(CartContext);
   const { wishlistItems, setWishlistItems } =
     useContext(WishlistContext);
 
   const [quantity, setQuantity] = useState(1);
+  const [justAdded, setJustAdded] = useState(false);
 
-  const features = [
-    "Active Noise Cancellation",
-    "Bluetooth 5.3",
-    "30 Hours Battery Life",
-    "Fast USB-C Charging",
-    "1 Year Warranty",
-  ];
+  // Product not found
+  if (!product) {
+    return (
+      <section className="min-h-screen bg-slate-50 px-4 py-20">
+        <div className="mx-auto max-w-3xl rounded-3xl bg-white p-10 text-center shadow-sm">
+          <h1 className="text-3xl font-bold text-slate-900">
+            Product Not Found
+          </h1>
 
-  const product = dummyProducts.find(
-    (item) => item.id === Number(id)
+          <p className="mt-3 text-slate-500">
+            Sorry, this product doesn't exist.
+          </p>
+
+          <Link
+            to="/products"
+            className="mt-8 inline-flex items-center gap-2 rounded-xl bg-emerald-500 px-6 py-3 font-semibold text-white transition hover:bg-emerald-600"
+          >
+            <ArrowLeft size={18} />
+            Back to Products
+          </Link>
+        </div>
+      </section>
+    );
+  }
+
+  const discount =
+    product.oldPrice && product.oldPrice > product.price
+      ? Math.round(
+          ((product.oldPrice - product.price) /
+            product.oldPrice) *
+            100
+        )
+      : null;
+
+  const isWishlisted = wishlistItems.some(
+    (item) => item.id === product.id
   );
+
+  const handleWishlist = () => {
+    if (isWishlisted) {
+      setWishlistItems(
+        wishlistItems.filter((item) => item.id !== product.id)
+      );
+    } else {
+      setWishlistItems([...wishlistItems, product]);
+    }
+  };
 
   const handleAddToCart = () => {
     const existingItem = cartItems.find(
       (item) => item.id === product.id
     );
 
-    alert("Product added to cart!");
-
     if (existingItem) {
-      const updatedCart = cartItems.map((item) =>
-        item.id === product.id
-          ? {
-              ...item,
-              quantity: item.quantity + quantity,
-            }
-          : item
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + quantity,
+              }
+            : item
+        )
       );
-
-      setCartItems(updatedCart);
     } else {
       setCartItems([
         ...cartItems,
@@ -54,145 +96,217 @@ const ProductDetails = () => {
         },
       ]);
     }
+
+    setJustAdded(true);
+
+    setTimeout(() => {
+      setJustAdded(false);
+    }, 1500);
   };
 
-  const handleWishlist = () => {
-    const existingItem = wishlistItems.find(
-      (item) => item.id === product.id
-    );
+  return (
+    <section className="min-h-screen bg-slate-50 py-16 sm:py-20">
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-8">
 
-    if (existingItem) {
-      alert("Already in Wishlist!");
-      return;
-    }
+        {/* Back */}
+        <Link
+          to="/products"
+          className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition hover:text-emerald-500"
+        >
+          <ArrowLeft size={18} />
+          Back to Products
+        </Link>
 
-    setWishlistItems([...wishlistItems, product]);
+        {/* Main Product */}
+        <div className="grid gap-10 rounded-3xl bg-white p-6 shadow-sm sm:p-8 lg:grid-cols-2 lg:p-10">
 
-    alert("Added to Wishlist!");
-  };
+          {/* Image */}
+          <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden rounded-3xl bg-slate-50">
 
-  if (!product) {
-    return (
-      <div className="py-20 text-center">
-        Product not found.
-      </div>
-    );
-  }
+            {discount && (
+              <span className="absolute left-5 top-5 z-10 rounded-full bg-emerald-500 px-4 py-2 text-sm font-bold text-white">
+                -{discount}%
+              </span>
+            )}
 
-  return (<section className="bg-slate-50 py-16 min-h-screen">
-  <div className="mx-auto grid max-w-[1340px] gap-12 px-6 lg:grid-cols-2 lg:px-10">
+            <button
+              onClick={handleWishlist}
+              aria-label={
+                isWishlisted
+                  ? "Remove from wishlist"
+                  : "Add to wishlist"
+              }
+              className={`absolute right-5 top-5 z-10 rounded-full p-3 shadow-md transition ${
+                isWishlisted
+                  ? "bg-emerald-500 text-white"
+                  : "bg-white text-slate-700 hover:bg-emerald-500 hover:text-white"
+              }`}
+            >
+              <Heart
+                size={22}
+                fill={
+                  isWishlisted
+                    ? "currentColor"
+                    : "none"
+                }
+              />
+            </button>
 
-    {/* Product Image */}
-    <div className="rounded-3xl bg-white p-8 shadow-sm">
-      <img
-        src={product.image}
-        alt={product.name}
-        className="mx-auto h-[420px] object-contain"
-      />
-    </div>
+            <motion.img
+              src={product.image}
+              alt={product.name}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.5,
+                ease: EASE,
+              }}
+              className="h-[350px] w-full object-contain p-8 transition duration-500 hover:scale-105"
+            />
+          </div>
 
-    {/* Product Info */}
-    <div>
+          {/* Details */}
+          <div className="flex flex-col justify-center">
 
-      <span className="text-sm font-semibold uppercase tracking-[3px] text-emerald-500">
-        Headphones
-      </span>
+            <span className="text-sm font-bold uppercase tracking-[2px] text-emerald-500">
+              {product.category}
+            </span>
 
-      <h1 className="mt-3 text-5xl font-black text-slate-900">
-        {product.name}
-      </h1>
+            <h1 className="mt-4 text-4xl font-black leading-tight text-slate-900 sm:text-5xl">
+              {product.name}
+            </h1>
 
-      <div className="mt-5 flex items-center gap-4">
-        <span className="text-4xl font-bold text-slate-900">
-          ${product.price}
-        </span>
+            {/* Rating */}
+            <div className="mt-5 flex items-center gap-1">
+              {[...Array(5)].map((_, index) => {
+                const filled =
+                  index < Math.round(product.rating);
 
-        <span className="text-xl text-slate-400 line-through">
-          ${product.oldPrice}
-        </span>
-      </div>
+                return (
+                  <Star
+                    key={index}
+                    size={19}
+                    fill={
+                      filled
+                        ? "currentColor"
+                        : "none"
+                    }
+                    className={
+                      filled
+                        ? "text-yellow-400"
+                        : "text-slate-300"
+                    }
+                  />
+                );
+              })}
 
-      <p className="mt-8 leading-8 text-slate-600">
-        Experience industry-leading noise cancellation,
-        premium sound quality and all-day comfort.
-        Perfect for music lovers, professionals and travel.
-      </p>
+              <span className="ml-2 text-sm font-medium text-slate-500">
+                {product.rating} / 5
+              </span>
+            </div>
 
-      {/* Quantity */}
-      <div className="mt-10">
-        <h3 className="mb-3 text-lg font-semibold text-slate-900">
-          Quantity
-        </h3>
+            {/* Price */}
+            <div className="mt-7 flex items-baseline gap-4">
+              <span className="text-4xl font-black text-slate-900">
+                ${product.price}
+              </span>
 
-        <div className="flex w-fit items-center overflow-hidden rounded-xl border border-slate-300">
+              {product.oldPrice && (
+                <span className="text-lg text-slate-400 line-through">
+                  ${product.oldPrice}
+                </span>
+              )}
+            </div>
 
-          <button
-            onClick={() =>
-              setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
-            }
-            className="px-5 py-3 text-xl font-bold hover:bg-slate-100"
-          >
-            -
-          </button>
+            {/* Description */}
+            <p className="mt-6 max-w-xl leading-7 text-slate-500">
+              Experience premium sound quality with the{" "}
+              {product.name}. Designed for comfortable everyday
+              listening with a clean and modern design.
+            </p>
 
-          <span className="border-x border-slate-300 px-6 py-3 font-semibold">
-            {quantity}
-          </span>
+            {/* Quantity */}
+            <div className="mt-8">
+              <p className="mb-3 text-sm font-semibold text-slate-800">
+                Quantity
+              </p>
 
-          <button
-            onClick={() => setQuantity((prev) => prev + 1)}
-            className="px-5 py-3 text-xl font-bold hover:bg-slate-100"
-          >
-            +
-          </button>
+              <div className="flex w-fit items-center overflow-hidden rounded-xl border border-slate-300">
+                <button
+                  onClick={() =>
+                    setQuantity((prev) =>
+                      Math.max(1, prev - 1)
+                    )
+                  }
+                  className="px-5 py-3 text-lg transition hover:bg-slate-100"
+                >
+                  −
+                </button>
 
+                <span className="border-x border-slate-300 px-6 py-3 font-bold">
+                  {quantity}
+                </span>
+
+                <button
+                  onClick={() =>
+                    setQuantity((prev) => prev + 1)
+                  }
+                  className="px-5 py-3 text-lg transition hover:bg-slate-100"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Buttons */}
+            <div className="mt-8 flex gap-4">
+
+              <motion.button
+                onClick={handleAddToCart}
+                whileTap={{ scale: 0.97 }}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-4 font-bold text-white transition ${
+                  justAdded
+                    ? "bg-emerald-600"
+                    : "bg-emerald-500 hover:bg-emerald-600"
+                }`}
+              >
+                {justAdded ? (
+                  <>
+                    <Check size={20} />
+                    Added to Cart
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart size={20} />
+                    Add to Cart
+                  </>
+                )}
+              </motion.button>
+
+              <button
+                onClick={handleWishlist}
+                className={`rounded-xl border px-5 transition ${
+                  isWishlisted
+                    ? "border-emerald-500 bg-emerald-50 text-emerald-500"
+                    : "border-slate-300 text-slate-700 hover:border-emerald-500 hover:text-emerald-500"
+                }`}
+              >
+                <Heart
+                  size={22}
+                  fill={
+                    isWishlisted
+                      ? "currentColor"
+                      : "none"
+                  }
+                />
+              </button>
+
+            </div>
+
+          </div>
         </div>
       </div>
-
-      {/* Buttons */}
-      <div className="mt-10 flex flex-wrap gap-4">
-
-        <button
-          onClick={handleAddToCart}
-          className="rounded-xl bg-emerald-500 px-8 py-3 font-semibold text-white hover:bg-emerald-600"
-        >
-          Add to Cart
-        </button>
-
-        <button className="rounded-xl border border-slate-300 px-8 py-3 font-semibold hover:bg-slate-100">
-          Buy Now
-        </button>
-
-        <button
-          onClick={handleWishlist}
-          className="flex h-12 w-12 items-center justify-center rounded-xl border border-pink-300 text-pink-500 hover:bg-pink-50"
-        >
-          <Heart size={22} />
-        </button>
-
-      </div>
-
-      {/* Features */}
-      <div className="mt-12">
-        <h3 className="mb-4 text-xl font-bold text-slate-900">
-          Features
-        </h3>
-
-        <ul className="space-y-3">          {features.map((feature, index) => (
-            <li
-              key={index}
-              className="flex items-center gap-3 text-slate-700"
-            >
-              <span className="text-emerald-500">✔</span>
-              {feature}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-    </div>
-  </div>
-</section>
+    </section>
   );
 };
 
