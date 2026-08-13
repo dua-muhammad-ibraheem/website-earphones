@@ -3,18 +3,19 @@ import { Heart, ShoppingCart, Star, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import CartContext from "../../context/CartContext";
 import WishlistContext from "../../context/WishlistContext";
+import CartContext from "../../context/CartContext";
 
 const EASE = [0.16, 1, 0.3, 1];
 
 const ProductCard = ({ product }) => {
   const [justAdded, setJustAdded] = useState(false);
 
-  const { cartItems, setCartItems } = useContext(CartContext);
-
   const { wishlistItems, setWishlistItems } =
     useContext(WishlistContext);
+
+  const { cartItems, setCartItems } =
+    useContext(CartContext);
 
   const isWishlisted = wishlistItems.some(
     (item) => item.id === product.id
@@ -23,17 +24,19 @@ const ProductCard = ({ product }) => {
   const discount =
     product.oldPrice && product.oldPrice > product.price
       ? Math.round(
-          ((product.oldPrice - product.price) / product.oldPrice) * 100
+          ((product.oldPrice - product.price) /
+            product.oldPrice) *
+            100
         )
       : null;
 
   const handleWishlist = () => {
     if (isWishlisted) {
-      const updatedWishlist = wishlistItems.filter(
-        (item) => item.id !== product.id
+      setWishlistItems(
+        wishlistItems.filter(
+          (item) => item.id !== product.id
+        )
       );
-
-      setWishlistItems(updatedWishlist);
     } else {
       setWishlistItems([
         ...wishlistItems,
@@ -48,13 +51,16 @@ const ProductCard = ({ product }) => {
     );
 
     if (existingItem) {
-      const updatedCart = cartItems.map((item) =>
-        item.id === product.id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === product.id
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+              }
+            : item
+        )
       );
-
-      setCartItems(updatedCart);
     } else {
       setCartItems([
         ...cartItems,
@@ -75,12 +81,14 @@ const ProductCard = ({ product }) => {
   return (
     <motion.div
       whileHover={{ y: -8 }}
-      transition={{ duration: 0.3, ease: EASE }}
+      transition={{
+        duration: 0.3,
+        ease: EASE,
+      }}
       className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-shadow duration-300 hover:border-emerald-200 hover:shadow-xl"
     >
       {/* Image */}
-      <div className="relative flex h-56 items-center justify-center overflow-hidden bg-white">
-        {/* Discount Badge */}
+      <div className="relative flex h-52 items-center justify-center overflow-hidden bg-slate-50">
         {discount && (
           <span className="absolute left-4 top-4 z-10 rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-white">
             -{discount}%
@@ -102,7 +110,7 @@ const ProductCard = ({ product }) => {
           }`}
         >
           <motion.span
-            key={isWishlisted}
+            key={isWishlisted ? "filled" : "empty"}
             initial={{ scale: 0.6 }}
             animate={{ scale: 1 }}
             transition={{
@@ -201,7 +209,11 @@ const ProductCard = ({ product }) => {
             aria-label="Add to cart"
           >
             <motion.span
-              key={justAdded ? "check" : "cart"}
+              key={
+                justAdded
+                  ? "check"
+                  : "cart"
+              }
               initial={{
                 opacity: 0,
                 scale: 0.6,
