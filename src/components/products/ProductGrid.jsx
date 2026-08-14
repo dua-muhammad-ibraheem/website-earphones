@@ -9,12 +9,7 @@ const ProductGrid = ({
   selectedRating = "All Ratings",
 }) => {
   // Filter Products
-  console.log({
-  searchTerm,
-  maxPrice,
-  selectedCategories,
-  selectedRating,
-});
+
 const filteredProducts = dummyProducts.filter((product) => {
   const matchesSearch = product.name
     .toLowerCase()

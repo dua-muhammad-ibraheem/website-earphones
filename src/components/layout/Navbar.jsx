@@ -53,7 +53,6 @@ const Navbar = () => {
 
       {/* Main Container */}
       <div className="mx-auto max-w-[1400px] px-6">
-
         <div className="flex h-20 items-center justify-between gap-4">
 
           {/* Logo */}
@@ -89,13 +88,18 @@ const Navbar = () => {
               ))}
             </ul>
           </nav>
-                    {/* ================= Desktop Icons ================= */}
+
+          {/* Desktop Icons */}
           <div className="hidden lg:flex flex-1 items-center justify-end gap-5">
 
             {/* Search */}
-            <button className="text-[#111827] transition hover:text-[#10B981]">
+            <Link
+              to="/products?focus=search"
+              className="text-[#111827] transition hover:text-[#10B981]"
+              aria-label="Search products"
+            >
               <Search size={22} />
-            </button>
+            </Link>
 
             {/* Wishlist */}
             <Link
@@ -117,7 +121,10 @@ const Navbar = () => {
               <ShoppingCart size={22} />
 
               <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-              {cartItems.reduce((total, item) => total + item.quantity, 0)}
+                {cartItems.reduce(
+                  (total, item) => total + item.quantity,
+                  0
+                )}
               </span>
             </Link>
 
@@ -125,10 +132,9 @@ const Navbar = () => {
             <button className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white">
               <User size={20} />
             </button>
-
           </div>
 
-          {/* ================= Mobile Menu Button ================= */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen((prev) => !prev)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -160,10 +166,10 @@ const Navbar = () => {
               )}
             </AnimatePresence>
           </button>
-
         </div>
       </div>
-            {/* ================= Mobile Menu ================= */}
+
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -215,14 +221,19 @@ const Navbar = () => {
                 </motion.li>
               ))}
             </ul>
-                        {/* ================= Mobile Bottom Icons ================= */}
+
+            {/* Mobile Bottom Icons */}
             <div className="mt-auto flex items-center justify-around border-t border-gray-200 px-6 py-5">
 
               {/* Search */}
-              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
+              <Link
+                to="/products?focus=search"
+                onClick={closeMenu}
+                className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
+              >
                 <Search size={20} />
                 <span className="text-xs">Search</span>
-              </button>
+              </Link>
 
               {/* Wishlist */}
               <Link
@@ -248,7 +259,10 @@ const Navbar = () => {
                 <span className="text-xs">Cart</span>
 
                 <span className="absolute -top-1 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-[#10B981] text-[10px] text-white">
-{cartItems.reduce((total, item) => total + item.quantity, 0)}
+                  {cartItems.reduce(
+                    (total, item) => total + item.quantity,
+                    0
+                  )}
                 </span>
               </Link>
 
@@ -257,13 +271,10 @@ const Navbar = () => {
                 <User size={20} />
                 <span className="text-xs">Account</span>
               </button>
-
             </div>
-
           </motion.div>
         )}
       </AnimatePresence>
-
     </header>
   );
 };
