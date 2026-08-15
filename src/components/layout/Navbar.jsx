@@ -129,9 +129,12 @@ const Navbar = () => {
             </Link>
 
             {/* User */}
-            <button className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white">
-              <User size={20} />
-            </button>
+          <Link
+  to="/login"
+  className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white"
+>
+  <User size={20} />
+</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -267,10 +270,14 @@ const Navbar = () => {
               </Link>
 
               {/* Account */}
-              <button className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]">
-                <User size={20} />
-                <span className="text-xs">Account</span>
-              </button>
+           <Link
+  to="/login"
+  onClick={closeMenu}
+  className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
+>
+  <User size={20} />
+  <span className="text-xs">Account</span>
+</Link>
             </div>
           </motion.div>
         )}
