@@ -96,6 +96,8 @@ const ProductDetails = () => {
         },
       ]);
     }
+    
+ setQuantity(1);
 
     setJustAdded(true);
 
