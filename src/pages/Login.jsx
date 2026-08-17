@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import AuthContext from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -28,7 +32,7 @@ const Login = () => {
     );
 
     if (!savedUser) {
-      setError("No account found. Please create an account first.");
+      setError("No account found. Please sign up first.");
       return;
     }
 
@@ -40,13 +44,10 @@ const Login = () => {
       return;
     }
 
-    localStorage.setItem(
-      "aurexLoggedIn",
-      JSON.stringify({
-        name: savedUser.name,
-        email: savedUser.email,
-      })
-    );
+    login({
+      name: savedUser.name,
+      email: savedUser.email,
+    });
 
     navigate("/");
   };
@@ -55,23 +56,14 @@ const Login = () => {
     <section className="flex min-h-screen items-center justify-center bg-slate-50 px-6 py-16">
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-sm">
 
-        {/* Heading */}
-        <div className="text-center">
-          <div className="mb-4 text-3xl font-black">
-            <span className="text-[#111827]">AUR</span>
-            <span className="text-[#10B981]">EX</span>
-          </div>
+        <h1 className="text-3xl font-black text-slate-900">
+          Welcome Back
+        </h1>
 
-          <h1 className="text-3xl font-black text-slate-900">
-            Welcome Back
-          </h1>
+        <p className="mt-2 text-slate-500">
+          Login to your AUREX account.
+        </p>
 
-          <p className="mt-2 text-slate-500">
-            Login to your AUREX account.
-          </p>
-        </div>
-
-        {/* Form */}
         <form
           onSubmit={handleSubmit}
           className="mt-8 space-y-5"
@@ -83,7 +75,7 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Email"
             required
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-emerald-500"
           />
 
           <input
@@ -93,10 +85,9 @@ const Login = () => {
             onChange={handleChange}
             placeholder="Password"
             required
-            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-emerald-500"
+            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-emerald-500"
           />
 
-          {/* Error */}
           {error && (
             <p className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600">
               {error}
@@ -111,14 +102,13 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Signup */}
         <p className="mt-6 text-center text-sm text-slate-500">
           Don't have an account?{" "}
           <Link
             to="/signup"
-            className="font-semibold text-emerald-500 hover:text-emerald-600"
+            className="font-semibold text-emerald-500"
           >
-            Sign Up
+            Create Account
           </Link>
         </p>
 

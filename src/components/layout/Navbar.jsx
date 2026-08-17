@@ -13,6 +13,7 @@ import {
 // Contexts
 import WishlistContext from "../../context/WishlistContext";
 import CartContext from "../../context/CartContext";
+import AuthContext from "../../context/AuthContext";
 
 // Navbar Links
 const NAV_LINKS = [
@@ -39,6 +40,7 @@ const Navbar = () => {
   // Close Mobile Menu
   const closeMenu = () => setIsOpen(false);
 
+  const { loggedInUser, logout } = useContext(AuthContext);
   // Lock Scroll when menu opens
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -129,12 +131,22 @@ const Navbar = () => {
             </Link>
 
             {/* User */}
-          <Link
-  to="/login"
-  className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white"
->
-  <User size={20} />
-</Link>
+      {loggedInUser ? (
+  <button
+    onClick={logout}
+    className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-red-400 hover:text-red-500"
+  >
+    <User size={18} />
+    <span>{loggedInUser.name}</span>
+  </button>
+) : (
+  <Link
+    to="/login"
+    className="flex h-11 w-11 items-center justify-center rounded-full border border-gray-300 text-[#111827] transition hover:bg-[#10B981] hover:text-white"
+  >
+    <User size={20} />
+  </Link>
+)}
           </div>
 
           {/* Mobile Menu Button */}
@@ -270,14 +282,27 @@ const Navbar = () => {
               </Link>
 
               {/* Account */}
-           <Link
-  to="/login"
-  onClick={closeMenu}
-  className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
->
-  <User size={20} />
-  <span className="text-xs">Account</span>
-</Link>
+       {loggedInUser ? (
+  <button
+    onClick={() => {
+      logout();
+      closeMenu();
+    }}
+    className="flex flex-col items-center gap-1 text-[#111827] hover:text-red-500"
+  >
+    <User size={20} />
+    <span className="text-xs">Logout</span>
+  </button>
+) : (
+  <Link
+    to="/login"
+    onClick={closeMenu}
+    className="flex flex-col items-center gap-1 text-[#111827] hover:text-[#10B981]"
+  >
+    <User size={20} />
+    <span className="text-xs">Login</span>
+  </Link>
+)}
             </div>
           </motion.div>
         )}
