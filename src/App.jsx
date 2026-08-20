@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 // import Wishlist from "./pages/Wishlist";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <>
@@ -31,7 +32,14 @@ function App() {
         <Route path="/about" element={<About />} />
 <Route path="/support" element={<Support />} />
 <Route path="/contact" element={<Contact />} />
-<Route path="/checkout" element={<Checkout />} />
+<Route
+  path="/checkout"
+  element={
+    <ProtectedRoute>
+      <Checkout />
+    </ProtectedRoute>
+  }
+/>
 <Route
   path="/order-success"
   element={<OrderSuccess />}
