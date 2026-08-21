@@ -11,10 +11,11 @@ import Signup from "./pages/Signup";
 import Support from "./pages/Support";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-// import Wishlist from "./pages/Wishlist";
+
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
+// import Wishlist from "./pages/Wishlist";
 function App() {
   return (
     <>
