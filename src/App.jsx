@@ -11,7 +11,7 @@ import Signup from "./pages/Signup";
 import Support from "./pages/Support";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-
+import Footer from "./components/layout/Footer";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -47,6 +47,7 @@ function App() {
 />
 {/* <Route path="/wishlist" element={<Wishlist />} /> */}
       </Routes>
+        <Footer />
     </>
   );
 }
